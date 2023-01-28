@@ -19,7 +19,8 @@ function CategoriesScreen({navigation}) {
         <FlatList data={CATEGORIES} 
         keyExtractor={(item) => item.id} 
         renderItem={renderCategoryItem} 
-        numColumns={2} />
+        numColumns={2}
+        style={{backgroundColor: '#fff0e7'}} />
     )
 }
 

@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        fontWeight: 'bold',
+        fontFamily: 'Sofia-Bold',
         fontSize: 20,
     },
 });
