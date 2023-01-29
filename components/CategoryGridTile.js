@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        fontFamily: 'Sofia-Bold',
+        fontFamily: 'SofiaProBold',
         fontSize: 20,
     },
 });

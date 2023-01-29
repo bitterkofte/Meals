@@ -9,13 +9,14 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import CategoriesScreen from './screens/CategoriesScreen';
 import MealsOverviewScreen from './screens/MealsOverviewScreen';
+import MealDetailScreen from './screens/MealDetailScreen';
 
 const Cluster = createNativeStackNavigator();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
     'Sofia': require('./assets/fonts/Sofia-Pro-Regular.otf'),
-    'Sofia-Bold': require('./assets/fonts/Sofia-Pro-Bold.otf'),
+    'SofiaProBold': require('./assets/fonts/Sofia-Pro-Bold.otf'),
   });
 
   // useEffect(() => {
@@ -40,7 +41,10 @@ export default function App() {
             component={CategoriesScreen}
             // options={customOpt}
             />
-          <Cluster.Screen name="MealsOverview" component={MealsOverviewScreen} />
+          <Cluster.Screen name="MealsOverview" component={MealsOverviewScreen}
+            options={mealsOpt} />
+          <Cluster.Screen name="MealDetail" component={MealDetailScreen}
+            options={detailsOpt} />
         </Cluster.Navigator>
     </NavigationContainer>
     // <View style={{justifyContent: 'center', alignItems: 'center'}}>
@@ -59,7 +63,21 @@ const styles = StyleSheet.create({
 const defaultOpt = {
   title: "Categories",
   headerStyle: {backgroundColor: '#ffe0cb'},
-  headerTitleStyle: {fontFamily: 'Sofia-Bold'},
+  headerTitleStyle: {fontFamily: 'SofiaProBold'},
   // contentStyle: {backgroundColor: '#ffe0cb'},
   // headerTransparent: true,
+}
+
+const mealsOpt = {
+  title: "Details",
+  headerStyle: {backgroundColor: '#cbe3ff'},
+  headerTitleStyle: {fontFamily: 'SofiaProBold'},
+  contentStyle: {backgroundColor: '#e7efff'},
+}
+
+const detailsOpt = {
+  title: "Details",
+  headerStyle: {backgroundColor: '#cbffcc'},
+  headerTitleStyle: {fontFamily: 'SofiaProBold'},
+  contentStyle: {backgroundColor: '#e7ffef'},
 }
