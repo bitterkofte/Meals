@@ -2,16 +2,31 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { useEffect } from 'react';
 import { useFonts } from 'expo-font';
-// import * as SplashScreen from 'expo-splash-screen';
+import * as SplashScreen from 'expo-splash-screen';
+import { Ionicons } from '@expo/vector-icons'
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import CategoriesScreen from './screens/CategoriesScreen';
 import MealsOverviewScreen from './screens/MealsOverviewScreen';
 import MealDetailScreen from './screens/MealDetailScreen';
+import FavoritesScreen from './screens/FavoritesScreen';
 
 const Cluster = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
+function DrawerNavigator() {
+  return(
+    <Drawer.Navigator screenOptions={drawerOpt} >
+      <Drawer.Screen name="Categories" component={CategoriesScreen}
+        options={{drawerIcon: ({color, size}) => <Ionicons name='list' color={color} size={size} />}} />
+      <Drawer.Screen name="Favorites" component={FavoritesScreen}
+              options={{drawerIcon: ({color, size}) => <Ionicons name='star' color={color} size={size} />}} />
+    </Drawer.Navigator>
+  )
+}
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -19,18 +34,18 @@ export default function App() {
     'SofiaProBold': require('./assets/fonts/Sofia-Pro-Bold.otf'),
   });
 
-  // useEffect(() => {
-  //   async function prepare() {
-  //     await SplashScreen.preventAutoHideAsync();
-  //   }
-  //   prepare();
-  // }, []);
+  useEffect(() => {
+    async function prepare() {
+      await SplashScreen.preventAutoHideAsync();
+    }
+    prepare();
+  }, []);
 
-  // if (!fontsLoaded) {
-  //   return undefined;
-  // } else {
-  //   SplashScreen.hideAsync();
-  // }
+  if (!fontsLoaded) {
+    return undefined;
+  } else {
+    SplashScreen.hideAsync();
+  }
 
   return (
     <NavigationContainer>
@@ -38,8 +53,8 @@ export default function App() {
           screenOptions={defaultOpt}>
           <Cluster.Screen 
             name="MealsCategories" 
-            component={CategoriesScreen}
-            // options={customOpt}
+            component={DrawerNavigator}
+            options={{headerShown: false}}
             />
           <Cluster.Screen name="MealsOverview" component={MealsOverviewScreen}
             options={mealsOpt} />
@@ -59,6 +74,15 @@ const styles = StyleSheet.create({
 
   },
 });
+
+const drawerOpt = {
+  headerStyle: {backgroundColor: '#ffe0cb'},
+  headerTitleStyle: {fontFamily: 'SofiaProBold'},
+  sceneContainerStyle: {backgroundColor: '#fff0e7'},
+  drawerContentStyle: {backgroundColor: '#fbc9a7'},
+  drawerActiveTintColor: '#a80bf6',
+  drawerInactiveTintColor: '#86309b',
+}
 
 const defaultOpt = {
   title: "Categories",
