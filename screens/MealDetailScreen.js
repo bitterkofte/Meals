@@ -3,13 +3,37 @@ import { MEALS } from '../data/source';
 import List from '../components/MealDetail/List';
 import Subtitle from '../components/MealDetail/Subtitle';
 import MealDetails from '../components/MealDetails';
+import { useContext, useLayoutEffect } from "react";
+import IconButton from "../components/IconButton";
+import { FavContext } from "../store/context/fav-context";
 
-function MealDetailScreen({ route }) {
+function MealDetailScreen({ route, navigation }) {
+    const FMC = useContext(FavContext);
+
     const MealId = route.params.mealId;
     const selectedMeal = MEALS.find((meal) => meal.id === MealId);
 
+    const mealIsFav = FMC.ids.includes(MealId);
+
+    function favHandler() {
+      if(mealIsFav) {
+        FMC.remFav(MealId);
+      } else {
+        FMC.addFav(MealId);
+      }
+    }
+
+    useLayoutEffect(() => {
+      navigation.setOptions({
+        headerRight: () => {return <IconButton 
+                                    name={mealIsFav ? "star" : 'staro' }
+                                    color={mealIsFav ? "#00d0ff" : 'black' }
+                                    onPress={favHandler} />;}
+      });
+    }, [navigation, favHandler]);
+
     return (
-        <ScrollView style={styles.rootContainer}>
+        <ScrollView style={styles.rootContainer} fadingEdgeLength={2} >
             <Image style={styles.image} source={{ uri: selectedMeal.imageUrl }} />
             <Text style={styles.title}>{selectedMeal.title}</Text>
             <MealDetails

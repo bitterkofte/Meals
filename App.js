@@ -13,6 +13,7 @@ import CategoriesScreen from './screens/CategoriesScreen';
 import MealsOverviewScreen from './screens/MealsOverviewScreen';
 import MealDetailScreen from './screens/MealDetailScreen';
 import FavoritesScreen from './screens/FavoritesScreen';
+import FavCtxProvider from './store/context/fav-context';
 
 const Cluster = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -48,6 +49,7 @@ export default function App() {
   }
 
   return (
+    <FavCtxProvider>
     <NavigationContainer>
         <Cluster.Navigator
           screenOptions={defaultOpt}>
@@ -62,10 +64,7 @@ export default function App() {
             options={detailsOpt} />
         </Cluster.Navigator>
     </NavigationContainer>
-    // <View style={{justifyContent: 'center', alignItems: 'center'}}>
-    //   <Text style={{fontFamily: 'Sofia',fontSize: 40}}>SOFIA</Text>
-    //   <Text style={{fontSize: 40}}>SOFIA</Text>
-    // </View>
+    </FavCtxProvider>
   );
 }
 
